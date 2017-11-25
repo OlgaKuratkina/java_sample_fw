@@ -1,4 +1,4 @@
-package net.olga;
+package net.olga.sandbox;
 
 public class Point {
     public double x;
