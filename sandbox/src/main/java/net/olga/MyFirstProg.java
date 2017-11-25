@@ -1,3 +1,5 @@
+package net.olga;
+
 public class MyFirstProg {
 
 	public static void main(String[] Args) {
