@@ -29,4 +29,13 @@ public class BaseHelper {
             return false;
         }
     }
+
+    public void acceptAlert() {
+        try {
+            wd.switchTo().alert().accept();
+
+        } catch (NoAlertPresentException e) {
+            System.out.println("Alert was not found, do nothing");
+        }
+    }
 }
