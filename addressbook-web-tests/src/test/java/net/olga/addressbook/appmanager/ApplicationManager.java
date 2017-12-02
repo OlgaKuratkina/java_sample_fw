@@ -1,6 +1,5 @@
 package net.olga.addressbook.appmanager;
 
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
@@ -14,15 +13,6 @@ public class ApplicationManager {
     private ContactHelper contactHelper;
     private NaviHelper naviHelper;
     private SessionHelper sessionHelper;
-
-    public static boolean isAlertPresent(FirefoxDriver wd) {
-        try {
-            wd.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
 
     public void init() {
         wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
@@ -52,8 +42,4 @@ public class ApplicationManager {
     public NaviHelper getNavipHelper() {
         return naviHelper;
     }
-
-//    public SessionHelper getSessionHelper() {
-//        return sessionHelper;
-//    }
 }
