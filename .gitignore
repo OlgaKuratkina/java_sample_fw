@@ -3,6 +3,7 @@
 build/
 .idea/misc.xml
 .idea/workspace.xml
+.idea/libraries/
 out/
 
 # Ignore Gradle GUI config
