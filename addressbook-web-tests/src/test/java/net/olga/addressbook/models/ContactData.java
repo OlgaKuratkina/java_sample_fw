@@ -1,4 +1,4 @@
-package net.olga.addressbook;
+package net.olga.addressbook.models;
 
 public class ContactData {
     private final String firstName;
