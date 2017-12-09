@@ -11,10 +11,17 @@ public class NaviHelper extends BaseHelper {
     }
 
     public void gotoGroupPage() {
+        if (isElementPresnt(By.tagName("h1")) && isElementPresnt(By.name("new"))
+                && wd.findElement(By.tagName("h1")).getText().equals("groups")) {
+            return;
+        }
         click(By.linkText("groups"));
     }
 
     public void gotoHomePage() {
+        if (isElementPresnt(By.id("maintable"))) {
+            return;
+        }
         click(By.linkText("home"));
     }
 }
