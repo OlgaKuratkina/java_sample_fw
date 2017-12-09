@@ -33,7 +33,7 @@ public class ApplicationManager {
 
 //        wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true).setBinary("C:/Program Files/Mozilla
 //      Firefox ESR/firefox.exe"));
-        wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/");
         groupHelper = new GroupHelper(wd);
         contactHelper = new ContactHelper(wd);

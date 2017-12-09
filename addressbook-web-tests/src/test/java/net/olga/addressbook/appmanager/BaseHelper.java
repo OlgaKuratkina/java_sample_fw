@@ -2,6 +2,7 @@ package net.olga.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 public class BaseHelper {
@@ -13,8 +14,13 @@ public class BaseHelper {
 
     protected void type(By locator, String text) {
         click(locator);
-        wd.findElement(locator).clear();
-        wd.findElement(locator).sendKeys(text);
+        if (text != null) {
+            String existText = wd.findElement(locator).getAttribute("value");
+            if (! existText.equals(text)) {
+                wd.findElement(locator).clear();
+                wd.findElement(locator).sendKeys(text);
+            }
+        }
     }
 
     protected void click(By locator) {
@@ -36,6 +42,15 @@ public class BaseHelper {
 
         } catch (NoAlertPresentException e) {
             System.out.println("Alert was not found, do nothing");
+        }
+    }
+
+    public boolean isElementPresnt(By locator) {
+        try {
+            wd.findElement(locator);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
         }
     }
 }
