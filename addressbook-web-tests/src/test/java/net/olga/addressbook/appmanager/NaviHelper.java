@@ -1,11 +1,12 @@
 package net.olga.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.WebDriver;
+
 
 public class NaviHelper extends BaseHelper {
 
-    public NaviHelper(FirefoxDriver wd) {
+    public NaviHelper(WebDriver wd) {
         super(wd);
     }
 
