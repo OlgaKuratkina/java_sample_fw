@@ -42,8 +42,9 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void initContactModifyByIndex(int index) {
-        String locator = "//form[2]/table/tbody/tr[" + (++index) + "]/td[8]/a";
-        click(By.xpath(locator));
+        String locator = "//tr//td[8]/a";
+        List<WebElement> cells = wd.findElements(By.xpath(locator));
+        cells.get(index).click();
     }
 
     public void createContact(ContactData contact) {
