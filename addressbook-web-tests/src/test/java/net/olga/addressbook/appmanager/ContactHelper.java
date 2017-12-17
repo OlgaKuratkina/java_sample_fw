@@ -3,6 +3,10 @@ package net.olga.addressbook.appmanager;
 import net.olga.addressbook.models.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ContactHelper extends BaseHelper {
@@ -29,8 +33,8 @@ public class ContactHelper extends BaseHelper {
         click(By.linkText("add new"));
     }
 
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public void selectContact(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void deleteSelectedContacts() {
@@ -54,5 +58,25 @@ public class ContactHelper extends BaseHelper {
 
     public void submitContactModification() {
         click(By.name("update"));
+    }
+
+    public int getContactCount() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactData> getContactList() {
+        List <ContactData> contacts = new ArrayList<>();
+        List <WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement el: elements) {
+            List <WebElement> cels = el.findElements(By.tagName("td"));
+            int id = Integer.parseInt(cels.get(0).findElement(By.tagName("input")).getAttribute("id"));
+            String last_name = cels.get(1).getText();
+            String first_name = cels.get(2).getText();
+            String address = cels.get(3).getText();
+            String email = cels.get(4).getText();
+//            String phones = cels.get(5).getText();
+            contacts.add(new ContactData(id, first_name, last_name, address, email));
+        }
+        return contacts;
     }
 }
