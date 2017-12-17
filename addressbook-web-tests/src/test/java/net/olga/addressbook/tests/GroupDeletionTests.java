@@ -1,7 +1,10 @@
 package net.olga.addressbook.tests;
 
 import net.olga.addressbook.models.GroupData;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 public class GroupDeletionTests extends TestBase {
 
@@ -11,9 +14,14 @@ public class GroupDeletionTests extends TestBase {
         if (! app.getGroupHelper().isThereGroup()) {
             app.getGroupHelper().createGroup(new GroupData("test1", null, null));
         }
-        app.getGroupHelper().selectGroup();
+        List<GroupData> before = app.getGroupHelper().getGroupList();
+        app.getGroupHelper().selectGroup(0);
         app.getGroupHelper().deleteSelectedGroups();
         app.getGroupHelper().returnGroupPage();
+        List<GroupData> after = app.getGroupHelper().getGroupList();
+        Assert.assertEquals(before.size(), after.size() + 1);
+        before.remove(0);
+        Assert.assertEquals(before, after);
     }
 
 }
