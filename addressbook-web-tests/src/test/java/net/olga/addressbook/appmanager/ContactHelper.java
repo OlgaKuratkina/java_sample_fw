@@ -53,6 +53,10 @@ public class ContactHelper extends BaseHelper {
         cells.get(index).click();
     }
 
+    private void initContactModifyById(int id) {
+        wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
+    }
+
     public void create(ContactData contact) {
         initContactCreation();
         fillContactForm(contact);
@@ -71,8 +75,8 @@ public class ContactHelper extends BaseHelper {
         acceptAlert();
     }
 
-    public void modify(int index, ContactData edited_contact) {
-        initContactModifyByIndex(index);
+    public void modify( ContactData edited_contact) {
+        initContactModifyById(edited_contact.getId());
         fillContactForm(edited_contact);
         submitContactModification();
         gotoHomePage();
@@ -89,22 +93,12 @@ public class ContactHelper extends BaseHelper {
         click(By.name("update"));
     }
 
-    public List<ContactData> list() {
-        List <ContactData> contacts = new ArrayList<>();
-        List <WebElement> elements = wd.findElements(By.name("entry"));
-        for (WebElement el: elements) {
-            List <WebElement> cels = el.findElements(By.tagName("td"));
-            int id = Integer.parseInt(cels.get(0).findElement(By.tagName("input")).getAttribute("id"));
-            String last_name = cels.get(1).getText();
-            String first_name = cels.get(2).getText();
-            String address = cels.get(3).getText();
-            String email = cels.get(4).getText();
-//            String phones = cels.get(5).getText();
-            contacts.add(new ContactData()
-                    .withId(id).withFirstName(first_name).withLastName(last_name)
-                    .withAddress(address).withEmail(email));
-        }
-        return contacts;
+    public int getContactCount() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public boolean isThereContact() {
+        return isElementPresnt(By.name("selected[]"));
     }
 
     public Set<ContactData> all() {
