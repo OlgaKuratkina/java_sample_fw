@@ -1,13 +1,12 @@
 package net.olga.addressbook.tests;
 
 import net.olga.addressbook.models.GroupData;
-import org.testng.Assert;
+import net.olga.addressbook.models.Groups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupModificationTests extends TestBase {
 
@@ -21,18 +20,16 @@ public class GroupModificationTests extends TestBase {
 
     @Test
     public void testGroupModification() {
-        Set<GroupData> before = app.group().all();
+        Groups before = app.group().all();
         GroupData modifiedGroup = before.iterator().next();
         GroupData groupData = new GroupData()
                 .withId(modifiedGroup.getId()).withName("Changed name").withHeader("changed header")
                 .withFooter("changed footer");
         app.group().modify(groupData);
-        Set<GroupData> after = app.group().all();
-        Assert.assertEquals(before.size(), after.size());
+        Groups after = app.group().all();
+        assertThat(before.size(), equalTo(after.size()));
 
-        before.remove(modifiedGroup);
-        before.add(groupData);
-        Assert.assertEquals(before, after);
+        assertThat(before.withOut(modifiedGroup).withAdded(groupData), equalTo(after));
     }
 
 }

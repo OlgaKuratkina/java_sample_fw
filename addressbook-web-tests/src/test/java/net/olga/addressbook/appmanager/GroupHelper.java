@@ -1,6 +1,7 @@
 package net.olga.addressbook.appmanager;
 
 import net.olga.addressbook.models.GroupData;
+import net.olga.addressbook.models.Groups;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -81,8 +82,8 @@ public class GroupHelper extends BaseHelper {
         returnGroupPage();
     }
 
-    public Set<GroupData> all() {
-        Set<GroupData> groups = new HashSet<GroupData>();
+    public Groups all() {
+        Groups groups = new Groups();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element: elements) {
             String name = element.getText();
