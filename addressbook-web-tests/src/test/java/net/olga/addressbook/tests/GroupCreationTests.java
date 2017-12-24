@@ -15,9 +15,8 @@ public class GroupCreationTests extends TestBase {
         Groups before = app.group().all();
         GroupData group = new GroupData().withName("test2");
         app.group().create(group);
+        assertThat(before.size(), equalTo(app.group().count()-1));
         Groups after = app.group().all();
-
-        assertThat(before.size(), equalTo(after.size()-1));
 
 //        Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
 

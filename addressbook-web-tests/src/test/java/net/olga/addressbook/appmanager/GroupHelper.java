@@ -6,16 +6,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GroupHelper extends BaseHelper {
 
     public GroupHelper(WebDriver wd) {
         super(wd);
     }
+
+    public Groups groupCache = null;
 
     public void fillGroupForm(GroupData groupData) {
         type(By.name("group_name"), groupData.getName());
@@ -59,18 +58,21 @@ public class GroupHelper extends BaseHelper {
         initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();
+        groupCache = null;
         returnGroupPage();
     }
 
     public void delete(int index) {
         select(index);
         deleteSelected();
+        groupCache = null;
         returnGroupPage();
     }
 
     public void delete(GroupData group) {
         selectById(group.getId());
         deleteSelected();
+        groupCache = null;
         returnGroupPage();
     }
 
@@ -79,24 +81,28 @@ public class GroupHelper extends BaseHelper {
         initGroupModification();
         fillGroupForm(groupData);
         submitGroupModification();
+        groupCache = null;
         returnGroupPage();
     }
 
     public Groups all() {
-        Groups groups = new Groups();
+        if (groupCache != null) {
+            return new Groups(groupCache);
+        }
+        Groups groupCache = new Groups();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element: elements) {
             String name = element.getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            groups.add(new GroupData().withId(id).withName(name));
+            groupCache.add(new GroupData().withId(id).withName(name));
         }
-        return groups;
+        return new Groups(groupCache);
     }
     public boolean isThereGroup() {
         return isElementPresnt(By.name("selected[]"));
     }
 
-    public int getGroupCount() {
+    public int count() {
         return wd.findElements(By.name("selected[]")).size();
     }
 }
