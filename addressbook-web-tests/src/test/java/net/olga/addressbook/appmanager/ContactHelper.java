@@ -77,10 +77,6 @@ public class ContactHelper extends BaseHelper {
         click(By.name("update"));
     }
 
-    public int getContactCount() {
-        return wd.findElements(By.name("selected[]")).size();
-    }
-
     public List<ContactData> list() {
         List <ContactData> contacts = new ArrayList<>();
         List <WebElement> elements = wd.findElements(By.name("entry"));
