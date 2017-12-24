@@ -128,4 +128,25 @@ public class ContactHelper extends BaseHelper {
         }
         return new Contacts(contactCache);
     }
+
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModifyById(contact.getId());
+        String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
+        String middleName = wd.findElement(By.name("middlename")).getAttribute("value");
+        String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+        String nickName = wd.findElement(By.name("nickname")).getAttribute("value");
+        String title = wd.findElement(By.name("title")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getAttribute("value");
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        String homePhone = wd.findElement(By.name("home")).getAttribute("value");
+        String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
+        String workPhone = wd.findElement(By.name("work")).getAttribute("value");
+        wd.navigate().back();
+        ContactData newContact = new ContactData()
+                .withId(contact.getId()).withFirstName(firstName).withMiddleName(middleName).withLastName(lastName)
+                .withNick(nickName).withTitle(title).withAddress(address).withEmail(email).withHomePhone(homePhone)
+                .withMobilePhone(mobilePhone).withWorkPhone(workPhone);
+
+        return newContact;
+    }
 }
