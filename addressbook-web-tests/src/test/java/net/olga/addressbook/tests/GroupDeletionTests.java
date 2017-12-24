@@ -2,11 +2,20 @@ package net.olga.addressbook.tests;
 
 import net.olga.addressbook.models.GroupData;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 public class GroupDeletionTests extends TestBase {
+
+    @BeforeMethod
+    public void ensurePreconditions() {
+        app.getNavipHelper().gotoGroupPage();
+        if (! app.getGroupHelper().isThereGroup()) {
+            app.getGroupHelper().createGroup(new GroupData("test1", null, null));
+        }
+    }
 
     @Test
     public void testGroupDeletion() {

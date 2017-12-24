@@ -59,6 +59,14 @@ public class GroupHelper extends BaseHelper {
         returnGroupPage();
     }
 
+    public void modifyGroup(int index, GroupData groupData) {
+        selectGroup(index);
+        initGroupModification();
+        fillGroupForm(groupData);
+        submitGroupModification();
+        returnGroupPage();
+    }
+
     public int getGroupCount() {
         return wd.findElements(By.name("selected[]")).size();
     }
