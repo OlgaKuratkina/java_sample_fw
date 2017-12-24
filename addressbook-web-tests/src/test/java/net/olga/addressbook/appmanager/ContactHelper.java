@@ -33,11 +33,11 @@ public class ContactHelper extends BaseHelper {
         click(By.linkText("add new"));
     }
 
-    public void selectContact(int index) {
+    public void select(int index) {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
-    public void deleteSelectedContacts() {
+    public void deleteSelected() {
         click(By.xpath("//div[1]/div[4]/form[2]/div[2]/input"));
     }
 
@@ -47,13 +47,19 @@ public class ContactHelper extends BaseHelper {
         cells.get(index).click();
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
     }
 
-    public void modifyContact(int index, ContactData edited_contact) {
+    public void delete(int index) {
+        select(index);
+        deleteSelected();
+        acceptAlert();
+    }
+
+    public void modify(int index, ContactData edited_contact) {
         initContactModifyByIndex(index);
         fillContactForm(edited_contact);
         submitContactModification();
@@ -67,10 +73,6 @@ public class ContactHelper extends BaseHelper {
         click(By.linkText("home"));
     }
 
-    public boolean isThereContact() {
-        return isElementPresnt(By.name("selected[]"));
-    }
-
     public void submitContactModification() {
         click(By.name("update"));
     }
@@ -79,7 +81,7 @@ public class ContactHelper extends BaseHelper {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List <ContactData> contacts = new ArrayList<>();
         List <WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement el: elements) {

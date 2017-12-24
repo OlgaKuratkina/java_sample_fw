@@ -10,7 +10,7 @@ public class NaviHelper extends BaseHelper {
         super(wd);
     }
 
-    public void gotoGroupPage() {
+    public void groupPage() {
         if (isElementPresnt(By.tagName("h1")) && isElementPresnt(By.name("new"))
                 && wd.findElement(By.tagName("h1")).getText().equals("groups")) {
             return;
@@ -18,7 +18,7 @@ public class NaviHelper extends BaseHelper {
         click(By.linkText("groups"));
     }
 
-    public void gotoHomePage() {
+    public void HomePage() {
         if (isElementPresnt(By.id("maintable"))) {
             return;
         }
