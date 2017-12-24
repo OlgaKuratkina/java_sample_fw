@@ -6,7 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class ContactHelper extends BaseHelper {
@@ -37,6 +39,10 @@ public class ContactHelper extends BaseHelper {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
+    private void selectById(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+    }
+
     public void deleteSelected() {
         click(By.xpath("//div[1]/div[4]/form[2]/div[2]/input"));
     }
@@ -55,6 +61,12 @@ public class ContactHelper extends BaseHelper {
 
     public void delete(int index) {
         select(index);
+        deleteSelected();
+        acceptAlert();
+    }
+
+    public void delete(ContactData contact) {
+        selectById(contact.getId());
         deleteSelected();
         acceptAlert();
     }
@@ -79,6 +91,24 @@ public class ContactHelper extends BaseHelper {
 
     public List<ContactData> list() {
         List <ContactData> contacts = new ArrayList<>();
+        List <WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement el: elements) {
+            List <WebElement> cels = el.findElements(By.tagName("td"));
+            int id = Integer.parseInt(cels.get(0).findElement(By.tagName("input")).getAttribute("id"));
+            String last_name = cels.get(1).getText();
+            String first_name = cels.get(2).getText();
+            String address = cels.get(3).getText();
+            String email = cels.get(4).getText();
+//            String phones = cels.get(5).getText();
+            contacts.add(new ContactData()
+                    .withId(id).withFirstName(first_name).withLastName(last_name)
+                    .withAddress(address).withEmail(email));
+        }
+        return contacts;
+    }
+
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<>();
         List <WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement el: elements) {
             List <WebElement> cels = el.findElements(By.tagName("td"));

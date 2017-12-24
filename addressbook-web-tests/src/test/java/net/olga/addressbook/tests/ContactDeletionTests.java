@@ -6,13 +6,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.Set;
 
 public class ContactDeletionTests extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition() {
         app.goTo().HomePage();
-        if (app.contact().list().size() == 0) {
+        if (app.contact().all().size() == 0) {
             app.contact().create(new ContactData().withFirstName("Miguel").withMiddleName("Alberto")
                             .withLastName("Navarro").withNick("Mig").withTitle("Mr")
                             .withEmail("mig@navarro.io"));
@@ -21,15 +22,14 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion() {
-        int index = 0;
+        Set<ContactData> before = app.contact().all();
+        ContactData deletedContact = before.iterator().next();
+        app.contact().delete(deletedContact);
         app.goTo().HomePage();
-        List<ContactData> before = app.contact().list();
-        app.contact().delete(index);
-        app.goTo().HomePage();
-        List<ContactData> after = app.contact().list();
+        Set<ContactData> after = app.contact().all();
         Assert.assertEquals(before.size(), after.size() + 1);
 
-        before.remove(index);
+        before.remove(deletedContact);
         Assert.assertEquals(before, after);
     }
 }
