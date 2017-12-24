@@ -54,7 +54,8 @@ public class ContactHelper extends BaseHelper {
     }
 
     private void initContactModifyById(int id) {
-        wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
+//        wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
+        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
     }
 
     public void create(ContactData contact) {
@@ -138,6 +139,8 @@ public class ContactHelper extends BaseHelper {
         String title = wd.findElement(By.name("title")).getAttribute("value");
         String address = wd.findElement(By.name("address")).getAttribute("value");
         String email = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         String homePhone = wd.findElement(By.name("home")).getAttribute("value");
         String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
         String workPhone = wd.findElement(By.name("work")).getAttribute("value");
@@ -145,7 +148,7 @@ public class ContactHelper extends BaseHelper {
         ContactData newContact = new ContactData()
                 .withId(contact.getId()).withFirstName(firstName).withMiddleName(middleName).withLastName(lastName)
                 .withNick(nickName).withTitle(title).withAddress(address).withEmail(email).withHomePhone(homePhone)
-                .withMobilePhone(mobilePhone).withWorkPhone(workPhone);
+                .withMobilePhone(mobilePhone).withWorkPhone(workPhone).withEmail2(email2).withEmail3(email3);
 
         return newContact;
     }

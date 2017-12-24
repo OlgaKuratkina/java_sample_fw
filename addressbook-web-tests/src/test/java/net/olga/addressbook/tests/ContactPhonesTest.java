@@ -26,6 +26,7 @@ public class ContactPhonesTest extends TestBase {
         Contacts before = app.contact().all();
         ContactData contact = before.iterator().next();
         ContactData contactFromEditForm = app.contact().infoFromEditForm(contact);
+        System.out.println(contactFromEditForm);
 
 //        Contacts after = app.contact().all();
 
