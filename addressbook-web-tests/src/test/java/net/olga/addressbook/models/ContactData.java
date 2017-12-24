@@ -1,14 +1,60 @@
 package net.olga.addressbook.models;
 
 public class ContactData {
-    private final String firstName;
-    private final String middleName;
-    private final String lastName;
-    private final String nick;
-    private final String title;
-    private final String address;
-    private final String homePhone;
-    private final String email;
+    private int id = Integer.MAX_VALUE;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private String nick;
+    private String title;
+    private String address;
+    private String email;
+    private String homePhone;
+
+    public ContactData withFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public ContactData withMiddleName(String middleName) {
+        this.middleName = middleName;
+        return this;
+    }
+
+    public ContactData withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public ContactData withNick(String nick) {
+        this.nick = nick;
+        return this;
+    }
+
+    public ContactData withTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public ContactData withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public ContactData withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+        return this;
+    }
+
+    public ContactData withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public ContactData withId(int id) {
+        this.id = id;
+        return this;
+    }
 
     public int getId() {
         return id;
@@ -23,7 +69,6 @@ public class ContactData {
 
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
         return email != null ? email.equals(that.email) : that.email == null;
     }
 
@@ -31,7 +76,6 @@ public class ContactData {
     public int hashCode() {
         int result = firstName != null ? firstName.hashCode() : 0;
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
@@ -39,43 +83,17 @@ public class ContactData {
     @Override
     public String toString() {
         return "ContactData{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", nick='" + nick + '\'' +
+                ", title='" + title + '\'' +
                 ", address='" + address + '\'' +
+
                 ", email='" + email + '\'' +
-                ", id=" + id +
+                ", homePhone='" + homePhone + '\'' +
                 '}';
-    }
-
-    public void setId(int id) {
-
-        this.id = id;
-    }
-
-    private int id;
-
-    public ContactData(String firstName, String middleName, String lastName, String nick, String title, String address, String homePhone, String email) {
-        this.id = Integer.MAX_VALUE;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.nick = nick;
-        this.title = title;
-        this.address = address;
-        this.homePhone = homePhone;
-        this.email = email;
-    }
-
-    public ContactData(int id, String firstName, String lastName, String address, String email) {
-        this.id = id;
-        this.firstName = firstName;
-        this.middleName = null;
-        this.lastName = lastName;
-        this.nick = null;
-        this.title = null;
-        this.address = address;
-        this.homePhone = null;
-        this.email = email;
     }
 
     public String getFirstName() {

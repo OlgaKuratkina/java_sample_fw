@@ -88,7 +88,9 @@ public class ContactHelper extends BaseHelper {
             String address = cels.get(3).getText();
             String email = cels.get(4).getText();
 //            String phones = cels.get(5).getText();
-            contacts.add(new ContactData(id, first_name, last_name, address, email));
+            contacts.add(new ContactData()
+                    .withId(id).withFirstName(first_name).withLastName(last_name)
+                    .withAddress(address).withEmail(email));
         }
         return contacts;
     }
