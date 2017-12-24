@@ -1,31 +1,28 @@
 package net.olga.addressbook.tests;
 
 import net.olga.addressbook.models.ContactData;
-import org.testng.Assert;
+import net.olga.addressbook.models.Contacts;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreation() {
         app.goTo().HomePage();
-        Set<ContactData> before = app.contact().all();
+        Contacts before = app.contact().all();
         ContactData newContact = new ContactData().withFirstName("Miguel").withMiddleName("Alberto")
                 .withLastName("Navarro").withNick("Mig").withTitle("Mr")
                 .withEmail("mig@navarro.io");
         app.contact().create(newContact);
         app.goTo().HomePage();
-        Set<ContactData> after = app.contact().all();
-        Assert.assertEquals(before.size(), after.size()-1);
+        Contacts after = app.contact().all();
+        assertThat(before.size(), equalTo( after.size()-1));
 
-        newContact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
-        before.add(newContact);
-
-        Assert.assertEquals(before, after);
+        assertThat(before.withAdded(newContact
+                .withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt())), equalTo(after));
 
     }
 }

@@ -1,14 +1,12 @@
 package net.olga.addressbook.appmanager;
 
 import net.olga.addressbook.models.ContactData;
+import net.olga.addressbook.models.Contacts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 public class ContactHelper extends BaseHelper {
@@ -101,8 +99,8 @@ public class ContactHelper extends BaseHelper {
         return isElementPresnt(By.name("selected[]"));
     }
 
-    public Set<ContactData> all() {
-        Set<ContactData> contacts = new HashSet<>();
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         List <WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement el: elements) {
             List <WebElement> cels = el.findElements(By.tagName("td"));

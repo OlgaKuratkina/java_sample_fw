@@ -1,11 +1,12 @@
 package net.olga.addressbook.tests;
 
 import net.olga.addressbook.models.ContactData;
-import org.testng.Assert;
+import net.olga.addressbook.models.Contacts;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactDeletionTests extends TestBase {
 
@@ -21,14 +22,13 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion() {
-        Set<ContactData> before = app.contact().all();
+        Contacts before = app.contact().all();
         ContactData deletedContact = before.iterator().next();
         app.contact().delete(deletedContact);
         app.goTo().HomePage();
-        Set<ContactData> after = app.contact().all();
-        Assert.assertEquals(before.size(), after.size() + 1);
+        Contacts after = app.contact().all();
+        assertThat(before.size(), equalTo( after.size()+1));
 
-        before.remove(deletedContact);
-        Assert.assertEquals(before, after);
+        assertThat(before, equalTo(after.withOut(deletedContact)));
     }
 }
