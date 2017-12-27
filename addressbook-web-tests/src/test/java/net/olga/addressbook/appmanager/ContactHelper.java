@@ -121,12 +121,12 @@ public class ContactHelper extends BaseHelper {
             String last_name = cels.get(1).getText();
             String first_name = cels.get(2).getText();
             String address = cels.get(3).getText();
-            String email = cels.get(4).getText();
+            String emails = cels.get(4).getText();
             String allPhones = cels.get(5).getText();
-            String[] phones = allPhones.split("\n");
+//            String[] phones = allPhones.split("\n");
             contactCache.add(new ContactData()
                     .withId(id).withFirstName(first_name).withLastName(last_name)
-                    .withAddress(address).withEmail(email));
+                    .withAddress(address).withAllEmails(emails).withAllPhones(allPhones));
         }
         return new Contacts(contactCache);
     }
