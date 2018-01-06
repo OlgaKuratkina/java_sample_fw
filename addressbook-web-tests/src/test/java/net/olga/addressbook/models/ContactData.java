@@ -1,17 +1,24 @@
 package net.olga.addressbook.models;
 
+import com.google.gson.annotations.Expose;
+
 public class ContactData {
     private int id = Integer.MAX_VALUE;
+    @Expose
     private String firstName;
     private String middleName;
+    @Expose
     private String lastName;
     private String nick;
+    @Expose
     private String title;
     private String address;
+    @Expose
     private String email;
     private String email2;
     private String email3;
     private String homePhone;
+    @Expose
     private String mobilePhone;
     private String workPhone;
     private String allPhones;
