@@ -32,7 +32,7 @@ public class ContactAddressesTest extends TestBase {
         assertThat(cleaned(contact.getAddress()), equalTo(cleaned(contactFromEditForm.getAddress())));
 
     }
-    
+
 
     public static String cleaned(String address) {
         return address.replaceAll("\\s", "").replaceAll("\\\\", "");
