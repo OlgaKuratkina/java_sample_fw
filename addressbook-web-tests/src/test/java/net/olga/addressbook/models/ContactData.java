@@ -1,29 +1,61 @@
 package net.olga.addressbook.models;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firstname")
     private String firstName;
+    @Column(name = "middlename")
     private String middleName;
     @Expose
+    @Column(name = "lastname")
     private String lastName;
+    @Column(name = "nickname")
     private String nick;
     @Expose
+    @Column
     private String title;
+    @Column
+    @Type(type = "text")
     private String address;
     @Expose
+    @Column
+    @Type(type = "text")
     private String email;
+    @Transient
     private String email2;
+    @Transient
     private String email3;
+    @Column(name = "home")
+    @Type(type = "text")
     private String homePhone;
     @Expose
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobilePhone;
+    @Column(name = "work")
+    @Type(type = "text")
     private String workPhone;
+    @Transient
     private String allPhones;
+    @Transient
     private String allEmails;
+    @Transient
+    private String group;
 
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
 
     public ContactData withAllEmails(String allEmails) {
         this.allEmails = allEmails;
