@@ -1,27 +1,27 @@
 [
   {
     "name": "test 0",
-    "header": "header\n0",
-    "footer": "footer\n0"
+    "header": "header0",
+    "footer": "footer0"
   },
   {
     "name": "test 1",
-    "header": "header\n1",
-    "footer": "footer\n1"
+    "header": "header1",
+    "footer": "footer1"
   },
   {
     "name": "test 2",
-    "header": "header\n2",
-    "footer": "footer\n2"
+    "header": "header2",
+    "footer": "footer2"
   },
   {
     "name": "test 3",
-    "header": "header\n3",
-    "footer": "footer\n3"
+    "header": "header3",
+    "footer": "footer3"
   },
   {
     "name": "test 4",
-    "header": "header\n4",
-    "footer": "footer\n4"
+    "header": "header4",
+    "footer": "footer4"
   }
 ]
