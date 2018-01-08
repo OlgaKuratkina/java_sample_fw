@@ -2,9 +2,12 @@ package net.olga.addressbook.appmanager;
 
 import net.olga.addressbook.models.ContactData;
 import net.olga.addressbook.models.Contacts;
+import net.olga.addressbook.models.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import java.util.List;
 
@@ -16,7 +19,7 @@ public class ContactHelper extends BaseHelper {
     }
     public Contacts contactCache = null;
 
-    public void fillContactForm(ContactData contactData) {
+    public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("middlename"), contactData.getMiddleName());
         type(By.name("lastname"), contactData.getLastName());
@@ -25,6 +28,16 @@ public class ContactHelper extends BaseHelper {
         type(By.name("address"), contactData.getAddress());
         type(By.name("home"), contactData.getHomePhone());
         type(By.name("email"), contactData.getEmail());
+
+        if(creation) {
+            if (contactData.getGroups().size() > 0) {
+                Assert.assertTrue(contactData.getGroups().size() == 1);
+                new Select(wd.findElement(By.name("new_group")))
+                        .selectByVisibleText(contactData.getGroups().iterator().next().getName());
+            }
+        } else {
+                Assert.assertFalse(isElementPresnt(By.name("new_group")));
+            }
     }
 
     public void submitContactCreation() {
@@ -60,7 +73,7 @@ public class ContactHelper extends BaseHelper {
 
     public void create(ContactData contact) {
         initContactCreation();
-        fillContactForm(contact);
+        fillContactForm(contact, true);
         submitContactCreation();
         contactCache = null;
         gotoHomePage();
@@ -82,9 +95,27 @@ public class ContactHelper extends BaseHelper {
         gotoHomePage();
     }
 
+    public void addToGroup(ContactData contact, GroupData group) {
+        selectById(contact.getId());
+        new Select(wd.findElement(By.name("to_group")))
+                .selectByVisibleText(group.getName());
+        click(By.name("add"));
+        contactCache = null;
+        gotoHomePage();
+    }
+
+    public void removeFromGroup(ContactData contact, GroupData group) {
+        new Select(wd.findElement(By.name("group")))
+                .selectByVisibleText(group.getName());
+        selectById(contact.getId());
+        click(By.name("remove"));
+        contactCache = null;
+        gotoHomePage();
+    }
+
     public void modify( ContactData edited_contact) {
         initContactModifyById(edited_contact.getId());
-        fillContactForm(edited_contact);
+        fillContactForm(edited_contact, false);
         submitContactModification();
         contactCache = null;
         gotoHomePage();

@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "addressbook")
@@ -39,38 +41,6 @@ public class ContactData {
     @Type(type = "text")
     private String homePhone;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ContactData that = (ContactData) o;
-
-        if (id != that.id) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (nick != null ? !nick.equals(that.nick) : that.nick != null) return false;
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
-        if (mobilePhone != null ? !mobilePhone.equals(that.mobilePhone) : that.mobilePhone != null) return false;
-        return workPhone != null ? workPhone.equals(that.workPhone) : that.workPhone == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (nick != null ? nick.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
-        result = 31 * result + (mobilePhone != null ? mobilePhone.hashCode() : 0);
-        result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
-        return result;
-    }
-
     @Expose
     @Column(name = "mobile")
     @Type(type = "text")
@@ -83,13 +53,21 @@ public class ContactData {
     private String allPhones;
     @Transient
     private String allEmails;
-    @Transient
-    private String group;
 
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
+
+    public Groups getGroups() {
+        return new Groups(groups);
     }
+
+
+//    public ContactData withGroup(String group) {
+//        this.group = group;
+//        return this;
+//    }
 
     public ContactData withAllEmails(String allEmails) {
         this.allEmails = allEmails;
@@ -242,5 +220,42 @@ public class ContactData {
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (id != that.id) return false;
+        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        return groups != null ? groups.equals(that.groups) : that.groups == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (groups != null ? groups.hashCode() : 0);
+        return result;
+    }
+
+    public ContactData inGroup(GroupData group) {
+        groups.add(group);
+        return this;
+
+    }
+    public ContactData minusGroup(GroupData group) {
+        groups.remove(group);
+        return this;
+
     }
 }
