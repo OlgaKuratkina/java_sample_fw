@@ -1,7 +1,7 @@
-package net.olga.mantis.tests;
+package mantis.tests;
 
 import biz.futureware.mantis.rpc.soap.client.IssueData;
-import net.olga.mantis.appmanager.ApplicationManager;
+import mantis.appmanager.ApplicationManager;
 import org.openqa.selenium.remote.BrowserType;
 import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
@@ -12,9 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
-import java.util.stream.Collectors;
-
-import static org.hamcrest.CoreMatchers.equalTo;
 
 public class TestBase {
 

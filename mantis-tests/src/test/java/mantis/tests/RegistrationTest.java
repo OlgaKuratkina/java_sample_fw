@@ -1,6 +1,6 @@
-package net.olga.mantis.tests;
+package mantis.tests;
 
-import net.olga.mantis.models.MailMessage;
+import mantis.models.MailMessage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.testng.Assert.assertTrue;
 
-public class ChangePasswordTest extends TestBase{
+public class RegistrationTest extends TestBase {
 
     @BeforeMethod
     public void startMailServer() {
@@ -24,15 +24,16 @@ public class ChangePasswordTest extends TestBase{
     public void testRegistration() throws IOException, MessagingException {
         long now = System.currentTimeMillis();
         String email = String.format("user%s@localhost.localdomain", now);
-        String username = app.getProperty("web.adminLogin");
+        String username = String.format("user%s", now);
 //        String username = "Olga_test";
-        String password = app.getProperty("web.adminPassword");
+        String password = "password";
+        String realname = "Olga";
 
-        app.newSession().login(username, password);
-
+        app.registration().start(username, email);
         List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
         String link = findConfirmationLink(mailMessages, email);
 
+        app.registration().finish(link, password, realname);
         assertTrue(app.newSession().login(username, password));
     }
 

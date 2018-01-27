@@ -1,8 +1,7 @@
-package net.olga.mantis.tests;
+package mantis.tests;
 
-import biz.futureware.mantis.rpc.soap.client.IssueData;
-import net.olga.mantis.models.Issue;
-import net.olga.mantis.models.Project;
+import mantis.models.Issue;
+import mantis.models.Project;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -13,7 +12,7 @@ import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 
-public class SoapTestsSkippinLogic extends TestBase{
+public class SoapTestsSkippinLogic extends TestBase {
     @BeforeMethod
     public void skip() throws RemoteException, ServiceException, MalformedURLException {
         skipIfNotFixed(2);

@@ -1,4 +1,4 @@
-package net.olga.mantis.appmanager;
+package mantis.appmanager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

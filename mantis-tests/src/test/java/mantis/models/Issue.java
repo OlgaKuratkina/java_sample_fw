@@ -1,4 +1,4 @@
-package net.olga.mantis.models;
+package mantis.models;
 
 public class Issue {
     private int id;

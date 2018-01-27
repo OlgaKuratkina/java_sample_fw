@@ -1,6 +1,6 @@
-package net.olga.mantis.tests;
+package mantis.tests;
 
-import net.olga.mantis.appmanager.HttpSession;
+import mantis.appmanager.HttpSession;
 import org.testng.annotations.Test;
 
 import java.io.IOException;

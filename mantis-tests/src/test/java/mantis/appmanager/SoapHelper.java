@@ -1,8 +1,8 @@
-package net.olga.mantis.appmanager;
+package mantis.appmanager;
 
 import biz.futureware.mantis.rpc.soap.client.*;
-import net.olga.mantis.models.Issue;
-import net.olga.mantis.models.Project;
+import mantis.models.Issue;
+import mantis.models.Project;
 
 import javax.xml.rpc.ServiceException;
 import java.math.BigInteger;

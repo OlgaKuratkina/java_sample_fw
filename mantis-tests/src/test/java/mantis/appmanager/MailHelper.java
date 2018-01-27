@@ -1,12 +1,11 @@
-package net.olga.mantis.appmanager;
+package mantis.appmanager;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import net.olga.mantis.models.MailMessage;
+import mantis.models.MailMessage;
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;

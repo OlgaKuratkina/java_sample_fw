@@ -1,4 +1,4 @@
-package net.olga.mantis.appmanager;
+package mantis.appmanager;
 
 import org.apache.commons.net.ftp.FTPClient;
 
