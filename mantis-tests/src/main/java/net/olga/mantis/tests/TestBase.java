@@ -38,7 +38,7 @@ public class TestBase {
         IssueData issue = app.soap().getIssue(issueId);
         String resolution = issue.getResolution().getName();
         String status = issue.getStatus().getName();
- 
+
         return !(resolution.equals("fixed") | status.equals("resolved"));
     }
 
