@@ -1,12 +1,17 @@
 package net.olga.mantis.tests;
 
+import biz.futureware.mantis.rpc.soap.client.IssueData;
 import net.olga.mantis.appmanager.ApplicationManager;
 import org.openqa.selenium.remote.BrowserType;
+import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import javax.xml.rpc.ServiceException;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -27,6 +32,20 @@ public class TestBase {
     public void tearDown() throws IOException {
         app.ftp().restore("config_inc.php.bak", "config_inc.php");
         app.stop();
+    }
+
+    public boolean isIssueOpen(int issueId) throws RemoteException, ServiceException, MalformedURLException {
+        IssueData issue = app.soap().getIssue(issueId);
+        String resolution = issue.getResolution().getName();
+        String status = issue.getStatus().getName();
+ 
+        return !(resolution.equals("fixed") | status.equals("resolved"));
+    }
+
+    public void skipIfNotFixed(int issueId) throws RemoteException, ServiceException, MalformedURLException {
+        if (isIssueOpen(issueId)) {
+            throw new SkipException("Ignored because of issue " + issueId);
+        }
     }
 
 }

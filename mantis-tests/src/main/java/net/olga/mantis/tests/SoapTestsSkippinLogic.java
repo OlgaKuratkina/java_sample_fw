@@ -1,12 +1,9 @@
 package net.olga.mantis.tests;
 
-import biz.futureware.mantis.rpc.soap.client.MantisConnectLocator;
-import biz.futureware.mantis.rpc.soap.client.MantisConnectPortType;
-import biz.futureware.mantis.rpc.soap.client.ProjectData;
-import com.sun.org.apache.bcel.internal.generic.ISUB;
+import biz.futureware.mantis.rpc.soap.client.IssueData;
 import net.olga.mantis.models.Issue;
 import net.olga.mantis.models.Project;
-import org.hamcrest.core.Is;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.xml.rpc.ServiceException;
@@ -16,7 +13,12 @@ import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 
-public class SoapTests extends TestBase{
+public class SoapTestsSkippinLogic extends TestBase{
+    @BeforeMethod
+    public void skip() throws RemoteException, ServiceException, MalformedURLException {
+        skipIfNotFixed(2);
+    }
+
     @Test
     public void testGetProjects() throws MalformedURLException, ServiceException, RemoteException {
         Set<Project> projects = app.soap().getProjects();
@@ -24,6 +26,8 @@ public class SoapTests extends TestBase{
         for (Project project: projects) {
             System.out.println(project.getName());
         }
+        app.soap().getIssue(3);
+
     }
 
     @Test
@@ -33,7 +37,6 @@ public class SoapTests extends TestBase{
         Issue issue = new Issue().withSummary("test issue"
         ).withDescription("Some strange happened").withProject(project);
         Issue created = app.soap().addIssue(issue);
-        System.out.println(created.getId());
         assertEquals(issue.getSummary(), created.getSummary());
     }
 }

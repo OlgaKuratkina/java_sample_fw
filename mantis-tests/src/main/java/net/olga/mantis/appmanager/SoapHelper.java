@@ -27,6 +27,14 @@ public class SoapHelper {
                 .withName(p.getName())).collect(Collectors.toSet());
     }
 
+    public IssueData getIssue(int id) throws MalformedURLException, ServiceException, RemoteException {
+        MantisConnectPortType mc = getMantisConnect();
+        String user = app.getProperty("web.adminLogin");
+        String pass = app.getProperty("web.adminPassword");
+        IssueData issue = mc.mc_issue_get(user, pass, BigInteger.valueOf(id));
+        return issue;
+    }
+
     private MantisConnectPortType getMantisConnect() throws ServiceException, MalformedURLException {
         return new MantisConnectLocator().getMantisConnectPort(new
                 URL(app.getProperty("web.soapUrl")));
