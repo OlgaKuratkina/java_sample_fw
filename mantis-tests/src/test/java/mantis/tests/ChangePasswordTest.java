@@ -16,24 +16,27 @@ public class ChangePasswordTest extends TestBase {
 
     @BeforeMethod
     public void startMailServer() {
-//        app.mail().stop();
+        app.mail().stop();
         app.mail().start();
     }
 
     @Test
-    public void testRegistration() throws IOException, MessagingException {
+    public void testChangePassword() throws IOException, MessagingException, InterruptedException {
         long now = System.currentTimeMillis();
-        String email = String.format("user%s@localhost.localdomain", now);
         String username = app.getProperty("web.adminLogin");
-//        String username = "Olga_test";
         String password = app.getProperty("web.adminPassword");
+        String newPassword = "newpass" + now;
+        String userResetPassw = "Olga_test";
 
-        app.newSession().login(username, password);
+        app.baseHelper().login(username, password);
+        String email = app.baseHelper().initUserPassChange(userResetPassw);
 
-        List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+        List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
         String link = findConfirmationLink(mailMessages, email);
+        System.out.println(link);
+        app.baseHelper().finishPasswordChange(link, newPassword);
 
-        assertTrue(app.newSession().login(username, password));
+        assertTrue(app.newSession().login(userResetPassw, newPassword));
     }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {

@@ -55,4 +55,27 @@ public class BaseHelper {
             return false;
         }
     }
+    public String initUserPassChange(String username) {
+        wd.get(app.getProperty("web.baseUrl")+"/manage_user_page.php");
+//        wd.get("/manage_user_page.php");
+        wd.findElement(By.linkText(username)).click();
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        System.out.println(email);
+        click(By.xpath("//input[@value=\"Reset Password\"]"));
+        return email;
+    }
+    public Boolean finishPasswordChange(String link, String password) {
+        wd.get(link);
+//        type(By.name("realname"), realname);
+        type(By.name("password"), password);
+        type(By.name("password_confirm"), password);
+        click(By.xpath("//button[@type=\"submit\"]"));
+        return Boolean.TRUE;
+    }
+    public void login(String user, String password) {
+//        wd.get(app.getProperty("web.baseUrl") + "/login.php");
+        type(By.name("username"), user);
+        type(By.name("password"), password);
+        click(By.xpath("//input[@type=\"submit\"]"));
+    }
 }

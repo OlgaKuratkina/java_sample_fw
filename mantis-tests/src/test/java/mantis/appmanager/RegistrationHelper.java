@@ -24,8 +24,4 @@ public class RegistrationHelper extends BaseHelper {
         click(By.xpath("//button[@type=\"submit\"]"));
     }
 
-    public void applyChangePass(String user) {
-        wd.get(app.getProperty("web.baseUrl")+"/manage_user_page.php");
-
-    }
 }
