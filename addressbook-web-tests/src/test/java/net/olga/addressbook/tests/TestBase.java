@@ -19,7 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TestBase {
 
     protected final static ApplicationManager app = new ApplicationManager(
-            System.getProperty("browser", BrowserType.IE));
+            System.getProperty("browser", BrowserType.FIREFOX));
 
     @BeforeSuite
     public void setUp() throws Exception {
