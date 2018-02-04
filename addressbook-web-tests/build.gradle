@@ -37,6 +37,9 @@ task testContacts(type: Test) {
     if (projects.hasProperty('browser')) {
         systemProperty 'browser', "${browser}"
     }
+    if (projects.hasProperty('platform')) {
+        systemProperty 'platform', "${platform}"
+    }
     if (projects.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }
