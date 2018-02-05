@@ -50,12 +50,12 @@ public class ApplicationManager {
         }
         } else {
             DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setBrowserName(browser);
+            capabilities.setBrowserName("chrome");
 //            capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win7")));
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
 
-        wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
+//        wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
 //        .setBinary("C:/Program Files/Mozilla Firefox ESR/firefox.exe")
         wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
